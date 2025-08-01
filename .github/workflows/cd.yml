@@ -23,3 +23,6 @@ jobs:
       - name: test
         run: |
           echo "your message here"
+          docker build -f ./docker/Dockerfile.backend -t turbo-be .
+          docker build -f ./docker/Dockerfile.ws -t turbo-ws .
+          docker build -f ./docker/Dockerfile.web -t turbo-web .
