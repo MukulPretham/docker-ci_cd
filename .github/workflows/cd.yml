@@ -26,7 +26,11 @@ jobs:
           docker build -f ./docker/Dockerfile.backend -t turbo-be .
           docker build -f ./docker/Dockerfile.ws -t turbo-ws .
           docker build -f ./docker/Dockerfile.web -t turbo-web .
-          
-          docker push mukulpretham/turbo-be
-          docker push mukulpretham/turbo-ws
-          docker push mukulpretham/turbo-web
+
+          docker tag turbo-be mukulpretham/turbo-be:latest
+          docker tag turbo-ws mukulpretham/turbo-ws:latest
+          docker tag turbo-web mukulpretham/turbo-web:latest
+
+          docker push mukulpretham/turbo-be:latest
+          docker push mukulpretham/turbo-ws:latest
+          docker push mukulpretham/turbo-web:latest
