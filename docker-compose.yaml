@@ -1,0 +1,40 @@
+services:
+  postgres_db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=your_password
+  
+  backend: 
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgres://postgres:your_password@postgres_db:5432/todo_app
+    depends_on:
+      - postgres_db
+
+  websocket:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.ws
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgres://postgres:your_password@postgres_db:5432/todo_app
+    depends_on:
+      - postgres_db
+
+  web:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.web
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://postgres:your_password@postgres_db:5432/todo_app
+    depends_on:
+      - postgres_db

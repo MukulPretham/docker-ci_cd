@@ -1,0 +1,20 @@
+FROM node:23-alpine
+RUN npm install -g pnpm
+
+WORKDIR /turbo_app
+COPY ./package.json ./package.json
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./packages/db/package.json ./packages/db/package.json
+
+COPY ./packages/db ./packages/db
+
+COPY ./apps/ws/package.json ./apps/ws/package.json
+
+RUN pnpm install
+
+COPY . .
+
+RUN pnpm db:generate
+
+WORKDIR /turbo_app/apps/ws
+CMD [ "pnpm","run","dev"]
