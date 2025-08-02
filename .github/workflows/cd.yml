@@ -20,10 +20,11 @@ jobs:
             sudo docker pull mukulpretham/turbo-web
             sudo docker pull mukulpretham/turbo-ws
             sudo docker pull mukulpretham/turbo-be
-            sudo docker run -e POSTGRES_PASSWORD=your_password -d -p 5432:5432 postgres
-            sudo docker run -d --name -p 8080:8080 turbo-ws mukulpretham/turbo-ws
-            sudo docker run -d --name -p 3000:3000 turbo-web mukulpretham/turbo-web
-            sudo docker run -d --name turbo-be -p 3001:3001 mukulpretham/turbo-be
+            sudo docker network create turbo
+            sudo docker run -e POSTGRES_PASSWORD=your_password -d -p 5432:5432 --network turbo postgres
+            sudo docker run -d --name turbo-ws -p 8080:8080 --network turbo mukulpretham/turbo-ws
+            sudo docker run -d --name turbo-web -p 3000:3000 --network turbo mukulpretham/turbo-web
+            sudo docker run -d --name turbo-be -p 3001:3001 --network turbo mukulpretham/turbo-be
             
           EOF
 
