@@ -1,0 +1,21 @@
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+      
+      - name: deploy
+        run : |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem 
+          chmod 600 key.pem 
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{secrets.VM_IP}} << 'EOF'
+            echo "Hello, ssh was sucessfull"
+            docker compose up
+          EOF
+

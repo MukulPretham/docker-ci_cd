@@ -41,3 +41,4 @@ jobs:
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{secrets.VM_IP}}
           echo "Hello, ssh was sucessfull"
+          docker compose up
