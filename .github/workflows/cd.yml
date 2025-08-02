@@ -15,7 +15,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem 
           chmod 600 key.pem 
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{secrets.VM_IP}} << 'EOF'
-            sudo echo "Hello, ssh was sucessfull"
+            sudo echo "Hello,d ssh was sucessfull"
             sudo docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
             sudo docker pull mukulpretham/turbo-web
             sudo docker pull mukulpretham/turbo-ws
