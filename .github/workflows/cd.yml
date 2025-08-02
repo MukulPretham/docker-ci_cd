@@ -16,6 +16,14 @@ jobs:
           chmod 600 key.pem 
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{secrets.VM_IP}} << 'EOF'
             echo "Hello, ssh was sucessfull"
-            docker compose up
+            docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+            docker pull mukulpretham/turbo-web
+            docker pull mukulpretham/turbo-ws
+            docker pull mukulpretham/turbo-be
+            docker run -e POSTGRES_PASSWORD=your_password -d -p 5432:5432 postgres
+            docker run -d --name turbo-ws mukulpretham/turbo-ws
+            docker run -d --name turbo-web mukulpretham/turbo-web
+            docker run -d --name turbo-be mukulpretham/turbo-be
+            
           EOF
 
