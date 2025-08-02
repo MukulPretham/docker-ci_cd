@@ -36,7 +36,7 @@ jobs:
           docker push mukulpretham/turbo-web:latest
       
       - name: Deploy to VM
-        run :|
+        run : |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{secrets.VM_IP}}
